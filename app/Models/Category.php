@@ -10,4 +10,19 @@ class Category extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'image'];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function getImagenAttribute()
+    {
+        if ($this->image == null)
+            return 'noimg.jpg';
+        if (file_exists('storage/categories/' . $this->image))
+            return $this->image;
+        else
+            return 'noimg.jpg';
+    }
 }

@@ -6,7 +6,7 @@
                         data-dismiss="modal">
                     Cerrar
                 </button>
-                @if($selectedId < 1)
+                @if($selected_id < 1)
                     <button type="button"
                             wire:click.prevent="Store()"
                             class="btn btn-dark close-modal">
@@ -16,7 +16,7 @@
                     <button type="button"
                             wire:click.prevent="Update()"
                             class="btn btn-dark close-modal">
-                        Guardar
+                        Actualizar
                     </button>
                 @endif
             </div>

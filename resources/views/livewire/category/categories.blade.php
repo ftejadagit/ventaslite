@@ -44,7 +44,7 @@
                                 </td>
                                 <td class="text-center">
                                     <span>
-                                        <img src="{{ asset('storage/categories/' . $category->image) }}" alt="Imagen de ejemplo" height="70" width="80" class="rounded">
+                                        <img src="{{ asset('storage/categories/' . $category->imagen) }}" alt="Imagen de ejemplo" height="70" width="80" class="rounded">
                                     </span>
                                 </td>
                                 <td class="text-center">
@@ -58,7 +58,7 @@
                                         </svg>
                                     </a>
                                     <a href="javascript:void(0)"
-                                        onclick="Confirm({{ $category->id }})"
+                                        onclick="Confirm({{ $category->id }}, {{ $category->products->count() }})"
                                         class="btn btn-dark"
                                         title="Delete">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -71,7 +71,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    Pagination
+                    {{ $categories->links() }}
                 </div>
             </div>
         </div>
@@ -81,6 +81,41 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function(){
-        //
+        window.livewire.on('show-modal', msg => {
+            $('#theModal').modal('show')
+        });
+
+        window.livewire.on('category-added', msg => [
+            $('#theModal').modal('hide')
+        ]);
+
+        window.livewire.on('category-updated', msg => [
+            $('#theModal').modal('hide')
+        ]);
     });
+
+    function Confirm(id, products)
+    {
+        if (products > 0)
+        {
+            swal('NO SE PUEDE ELIMINAR LA CATEGORÍA PORQUE TIENE PRODUCTOS RELACIONADOS');
+            return;
+        }
+        swal({
+            title: 'CONFIRMAR',
+            text: '¿CONFIRMAS ELIMINAR EL REGISTRO?',
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Cerrar',
+            cancelButtonColor: '#fff',
+            confirmButtonColor: '#3b3f5c',
+            confirmButtonTexr: 'Aceptar',
+        }).then(function(result){
+            if(result.value)
+            {
+                window.livewire.emit('deleteRow', id)
+                swal.close();
+            }
+        })
+    }
 </script>
