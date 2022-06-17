@@ -10,14 +10,14 @@
                         <a href="javascript:void(0)"
                             class="tabmenu bg-dark"
                             data-toggle="modal"
-                            data-target="#theModal"
+                            data-target="#TheModal"
                         >
                             Agregar
                         </a>
                     </li>
                 </ul>
             </div>
-            @include('common/searchbox')
+            @include('common.searchbox')
             <div class="widget-content">
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped" mt-1>
@@ -26,30 +26,70 @@
                                 <th class="table-th text-white">
                                     DESCRIPCIÓN
                                 </th>
-                                <th class="table-th text-white">
+                                <th class="table-th text-white text-center">
+                                    BARCODE
+                                </th>
+                                <th class="table-th text-white text-center">
+                                    CATEGORÍA
+                                </th>
+                                <th class="table-th text-white text-center">
+                                    PRECIO
+                                </th>
+                                <th class="table-th text-white text-center">
+                                    STOCK
+                                </th>
+                                <th class="table-th text-white text-center">
+                                    INV.MIN
+                                </th>
+                                <th class="table-th text-white text-center">
                                     IMAGEN
                                 </th>
-                                <th class="table-th text-white">
+                                <th class="table-th text-white text-center">
                                     ACCIÓN
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($categories as $category)
+                            @foreach($data as $product)
                             <tr>
                                 <td>
-                                    <h6>
-                                        {{ $category->name }}
+                                    <h6 class="text-left">
+                                        {{ $product->name }}
+                                    </h6>
+                                </td>
+                                <td>
+                                    <h6 class="text-center">
+                                        {{ $product->barcode }}
+                                    </h6>
+                                </td>
+                                <td>
+                                    <h6 class="text-center">
+                                        {{ $product->category }}
+                                    </h6>
+                                </td>
+                                <td>
+                                    <h6 class="text-center">
+                                        {{ $product->price }}
+                                    </h6>
+                                </td>
+                                <td>
+                                    <h6 class="text-center">
+                                        {{ $product->stock }}
+                                    </h6>
+                                </td>
+                                <td>
+                                    <h6 class="text-center">
+                                        {{ $product->alerts }}
                                     </h6>
                                 </td>
                                 <td class="text-center">
                                     <span>
-                                        <img src="{{ asset('storage/categories/' . $category->imagen) }}" alt="Imagen de ejemplo" height="70" width="80" class="rounded">
+                                        <img src="{{ asset('storage/products/' . $product->imagen) }}" alt="Imagen de ejemplo" height="70" width="80" class="rounded">
                                     </span>
                                 </td>
                                 <td class="text-center">
                                     <a href="javascript:void(0)"
-                                        wire:click="Edit({{ $category->id }})"
+                                        wire:click.prevent="Edit({{ $product->id }})"
                                         class="btn btn-dark mtmobile"
                                         title="Edit">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -58,7 +98,7 @@
                                         </svg>
                                     </a>
                                     <a href="javascript:void(0)"
-                                        onclick="Confirm({{ $category->id }}, {{ $category->products->count() }})"
+                                        onclick="Confirm('{{ $product->id }}')"
                                         class="btn btn-dark"
                                         title="Delete">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -71,52 +111,33 @@
                             @endforeach
                         </tbody>
                     </table>
-                    {{ $categories->links() }}
+                    {{ $data->links() }}
                 </div>
             </div>
         </div>
     </div>
-    @include('livewire.category.form')
+    @include('livewire.product.form')
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function(){
-        window.livewire.on('show-modal', msg => {
+        window.livewire.on('product-added', msg => {
+            $('#theModal').modal('hide')
+        });
+        window.livewire.on('product-updated', msg => {
+            $('#theModal').modal('hide')
+        });
+        window.livewire.on('product-deleted', msg => {
+            //noty
+        });
+        window.livewire.on('modal-show', msg => {
             $('#theModal').modal('show')
         });
-        window.livewire.on('category-added', msg => {
+        window.livewire.on('modal-hide', msg => {
             $('#theModal').modal('hide')
         });
-        window.livewire.on('category-updated', msg => {
-            $('#theModal').modal('hide')
-        });/*
         window.livewire.on('hidden.bs.modal', msg => {
             $('.er').css('display', 'none')
-        });*/
+        });
     });
-
-    function Confirm(id, products)
-    {
-        if (products > 0)
-        {
-            swal('NO SE PUEDE ELIMINAR LA CATEGORÍA PORQUE TIENE PRODUCTOS RELACIONADOS');
-            return;
-        }
-        swal({
-            title: 'CONFIRMAR',
-            text: '¿CONFIRMAS ELIMINAR EL REGISTRO?',
-            type: 'warning',
-            showCancelButton: true,
-            cancelButtonText: 'Cerrar',
-            cancelButtonColor: '#fff',
-            confirmButtonColor: '#3b3f5c',
-            confirmButtonTexr: 'Aceptar',
-        }).then(function(result){
-            if(result.value)
-            {
-                window.livewire.emit('deleteRow', id)
-                swal.close();
-            }
-        })
-    }
 </script>
