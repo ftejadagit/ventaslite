@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUpLoads;
@@ -49,5 +50,51 @@ class Products extends Component
         ])
         ->extends('layouts.theme.app')
         ->section('content');
+    }
+
+    public function Store()
+    {
+        $rules = [
+            'name' => 'required|unique:products|min:3',
+            'cost' => 'required',
+            'price' => 'required',
+            'stock' => 'required',
+            'alerts' => 'required',
+            'category_id' => 'required|not_in:Elegir',
+        ];
+        $messages = [
+            'name.required' => 'Nombre del producto requerido',
+            'name.unique' => 'Ya exíste el nombre del producto',
+            'name.min' => 'El nombre del producto debe tener al menos 3 caracteres',
+            'cost.required' => 'El costo es requerido',
+            'price.required' => 'El precio es requerido',
+            'stock.required' => 'El stock es requerido',
+            'alerts.required' => 'Ingresa el valor mínimo en existencias',
+            'category_id.not_in' => 'Elige un nombre de categoría',
+        ];
+        $this->validate($rules, $messages);
+        $product = Product::create([
+            'name' => $this->name,
+            'cost' => $this->cost,
+            'price' => $this->price,
+            'barcode' => $this->barcode,
+            'stock' => $this->stock,
+            'alerts' => $this->alerts,
+            'category_id' => $this->category_id,
+        ]);
+        if($this->image)
+        {
+            $customFileName = uniqid() . '_.' . $this->image->extension();
+            $this->image->storeAs('public/products/', $customFileName);
+            $product->image = $customFileName;
+            $product->save();
+        }
+        $this->resetUI();
+        $this->emit('product-added', 'Producto Registrado');
+    }
+
+    public function resetUI()
+    {
+        # code...
     }
 }

@@ -10,7 +10,7 @@
                         <a href="javascript:void(0)"
                             class="tabmenu bg-dark"
                             data-toggle="modal"
-                            data-target="#TheModal"
+                            data-target="#theModal"
                         >
                             Agregar
                         </a>
