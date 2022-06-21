@@ -140,4 +140,24 @@
             $('.er').css('display', 'none')
         });
     });
+
+    function Confirm(id)
+    {
+        swal({
+            title: 'CONFIRMAR',
+            text: '¿CONFIRMAS ELIMINAR EL REGISTRO?',
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Cerrar',
+            cancelButtonColor: '#fff',
+            confirmButtonColor: '#3b3f5c',
+            confirmButtonTexr: 'Aceptar',
+        }).then(function(result){
+            if(result.value)
+            {
+                window.livewire.emit('deleteRow', id)
+                swal.close();
+            }
+        })
+    }
 </script>
