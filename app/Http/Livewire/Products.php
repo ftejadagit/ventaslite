@@ -44,7 +44,7 @@ class Products extends Component
             ->orderBy('products.name', 'asc')
             ->paginate($this->pagination);
 
-        return view('livewire.product.products', [
+        return view('livewire.product.component', [
             'data' => $products,
             'categories' => Category::orderBy('name', 'asc')->get(),
         ])

@@ -37,7 +37,7 @@ class Coins extends Component
         else
             $data = Denomination::orderBy('id', 'desc')->paginate($this->pagination);
 
-        return view('livewire.denomination.coins', ['data' => $data])
+        return view('livewire.denomination.component', ['data' => $data])
         ->extends('layouts.theme.app')
         ->section('content');
     }
