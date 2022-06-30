@@ -6,6 +6,8 @@ use Livewire\Component;
 
 class Pos extends Component
 {
+    public $total, $itemsQuantity, $cart = [];
+
     public function render()
     {
         return view('livewire.pos.component')

@@ -19,6 +19,9 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/widgets/modules-widgets.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/theme-checkbox-radio.css') }}">
 
+<link href="{{ asset('assets/css/apps/scrumboard.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/css/apps/notes.css') }}" rel="stylesheet" type="text/css" />
+
 <style>
     aside {
         display: none!important;
