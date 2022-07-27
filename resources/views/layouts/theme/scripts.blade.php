@@ -12,11 +12,13 @@
 <script src="{{ asset('plugins/sweetalerts/sweetalert2.min.js') }}"></script>
 <script src="{{ asset('plugins/notification/snackbar/snackbar.min.js') }}"></script>
 <script src="{{ asset('plugins/nicescroll/nicescroll.js') }}"></script>
+<script src="{{ asset('plugins/onscan.js/onscan.min.js') }}"></script>
+<script src="{{ asset('plugins/keypress.js/keypress.js') }}"></script>
 <script src="{{ asset('plugins/currency/currency.js') }}"></script>
 
 <script>
     function noty(msg, option = 1){
-        snackbar.show({
+        Snackbar.show({
             text: msg.toUpperCase(),
             actionText: 'Cerrar',
             actionTextColor: '#fff',

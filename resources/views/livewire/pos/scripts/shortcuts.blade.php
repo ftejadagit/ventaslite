@@ -5,12 +5,13 @@
     })
 
     listener.simple_combo("f8", function(){
+        document.getElementById('hiddenTotal').value = ''
         document.getElementById('cash').value = ''
         document.getElementById('cash').focus()
     })
 
     listener.simple_combo("f4", function(){
-        var total = parseFloat(document.getElementById('hiddenTotal'))
+        var total = parseFloat(document.getElementById('hiddenTotal').value)
         if(total > 0)
         {
             Confirm(0, 'clearCart', '¿SEGUR@ DE ELIMINAR EL CARRITO?')

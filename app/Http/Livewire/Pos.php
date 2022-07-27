@@ -4,6 +4,8 @@ namespace App\Http\Livewire;
 
 use App\Models\Denomination;
 use App\Models\Product;
+use App\Models\Sale;
+use App\Models\SaleDetail;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Livewire\Component;
 use DB;
@@ -22,7 +24,6 @@ class Pos extends Component
 
     public function render()
     {
-        $this->denominations = Denomination::all();
         return view('livewire.pos.component', [
             'denominations' => Denomination::orderBy('value', 'desc')->get(),
             'cart' => Cart::getContent()->sortBy('name')
@@ -33,8 +34,18 @@ class Pos extends Component
 
     public function ACash($value)
     {
-        $this->efectivo += ($value == 0 ? $this->total : $value);
-        $this->change = ($this->efectivo - $this->total);
+        if ($value == 0)
+        {
+            $this->efectivo = $this->total;
+            $this->change = 0;
+        }
+        else
+        {
+            $this->efectivo += $value;
+            $this->change = ($this->efectivo - $this->total);
+        }
+        //$this->efectivo += ($value == 0 ? $this->total : $value);
+        //$this->change = ($this->efectivo - $this->total);
     }
 
     protected $listeners = [
@@ -47,7 +58,7 @@ class Pos extends Component
     public function scanCode($barcode, $cant = 1)
     {
         $product = Product::where('barcode', $barcode)->first();
-        if($product == null || empty($product))
+        if($product == null || empty($product)) //$empty
         {
             $this->emit('scan-notfound', 'El producto no está registrado');
         }

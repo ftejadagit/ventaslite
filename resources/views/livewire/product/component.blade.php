@@ -136,9 +136,6 @@
         window.livewire.on('modal-hide', msg => {
             $('#theModal').modal('hide')
         });
-        $('#theModal').on('hidden.bs.modal', function(e) {
-            $('.er').css('display', 'none')
-        });
     });
 
     function Confirm(id)
