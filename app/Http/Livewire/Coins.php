@@ -126,6 +126,7 @@ class Coins extends Component
         $this->search = '';
         $this->selected_id = 0;
         $this->resetErrorBag();
+        $this->resetPage();
     }
 
     protected $listeners = [

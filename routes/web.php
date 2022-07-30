@@ -8,6 +8,7 @@ use App\Http\Livewire\Pos;
 use App\Http\Livewire\Roles;
 use App\Http\Livewire\Permisos;
 use App\Http\Livewire\Asignar;
+use App\Http\Livewire\Users;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,3 +24,4 @@ Route::get('pos', Pos::class);
 Route::get('roles', Roles::class);
 Route::get('permisos', Permisos::class);
 Route::get('asignar', Asignar::class);
+Route::get('users', Users::class);
