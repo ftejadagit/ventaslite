@@ -108,7 +108,7 @@
             </li>
 
             <li class="">
-                <a href="#" class="menu-toggle" data-active="false">
+                <a href="{{ url('cashout') }}" class="menu-toggle" data-active="false">
                     <div class="base-menu">
                         <div class="base-icons">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" stroke="currentColor" class="bi bi-currency-dollar" viewBox="0 0 16 16">
