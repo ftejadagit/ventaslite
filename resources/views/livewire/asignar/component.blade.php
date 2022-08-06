@@ -22,7 +22,7 @@
                 <div class="row mt-3">
                     <div class="col-sm-12">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped" mt-1>
+                            <table class="table table-bordered table-striped mt-1">
                                 <thead class="text-white" style="background: #3b3f5c">
                                     <tr>
                                         <th class="table-th text-white text-center">
