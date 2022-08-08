@@ -9,6 +9,7 @@ use App\Models\Sale;
 use App\Models\SaleDetail;
 use App\Models\User;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\SalesExport;
 
 class ExportController extends Controller
 {
@@ -43,5 +44,11 @@ class ExportController extends Controller
         $user = $userId == 0 ? 'Todos' : User::find($userId)->name;
         $pdf = Pdf::loadView('pdf.reporte', compact('data', 'reportType', 'user', 'dateFrom', 'dateTo'));
         return $pdf->stream('salesReport.pdf');
+    }
+
+    public function reportExcel($userId, $reportType, $dateFrom = null, $dateTo = null)
+    {
+        $reportName = 'Reporte de Ventas_' . uniqid() . '.xlsx';
+        return Excel::download(new SalesExport($userId, $reportType, $dateFrom, $dateTo), $reportName);
     }
 }
